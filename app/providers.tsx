@@ -9,8 +9,8 @@ import '@rainbow-me/rainbowkit/styles.css';
 
 const queryClient = new QueryClient();
 
-// Project ID от WalletConnect у тебя уже есть — ЭТОГО ДОСТАТОЧНО!
-const walletConnectProjectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || 'твой_id_здесь';
+// Твой реальный Project ID успешно интегрирован
+const walletConnectProjectId = '0d4cd7b0c9cc485c803323c2ceefeeef';
 
 const config = getDefaultConfig({
   appName: 'Base Checkin Tima',
@@ -26,12 +26,17 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
-        {/* Оставляем apiKey пустым или пишем любую строку. Это сработает! */}
         <OnchainKitProvider 
           chain={base} 
           apiKey="OFFLINE_MODE" 
         >
-          <RainbowKitProvider theme={darkTheme()} modalSize="compact">
+          <RainbowKitProvider 
+            theme={darkTheme()} 
+            modalSize="compact"
+            appInfo={{
+              appName: 'Base Checkin Tima',
+            }}
+          >
             {children}
           </RainbowKitProvider>
         </OnchainKitProvider>
