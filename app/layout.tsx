@@ -7,7 +7,10 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Base Check-in App",
-  description: "Created by Tima",
+  description: "Check in daily and build your streak",
+  other: {
+    'base:app_id': '69d6b07cadb751d63e3ce5e7',
+  },
 };
 
 export default function RootLayout({
