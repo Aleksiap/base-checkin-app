@@ -9,7 +9,7 @@ import '@rainbow-me/rainbowkit/styles.css';
 
 const queryClient = new QueryClient();
 
-// Твой реальный Project ID успешно интегрирован
+// Твой рабочий ID
 const walletConnectProjectId = '0d4cd7b0c9cc485c803323c2ceefeeef';
 
 const config = getDefaultConfig({
@@ -26,16 +26,15 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
+        {/* В старом коде здесь была минимальная конфигурация. 
+            Убираем все 'config={{...}}' из OnchainKit, они всё ломали! */}
         <OnchainKitProvider 
           chain={base} 
-          apiKey="OFFLINE_MODE" 
+          apiKey="OFFLINE_MODE"
         >
           <RainbowKitProvider 
             theme={darkTheme()} 
             modalSize="compact"
-            appInfo={{
-              appName: 'Base Checkin Tima',
-            }}
           >
             {children}
           </RainbowKitProvider>
