@@ -1,6 +1,5 @@
 'use client';
 
-import { OnchainKitProvider } from '@coinbase/onchainkit';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { WagmiProvider, http } from 'wagmi';
 import { base } from 'wagmi/chains';
@@ -9,7 +8,6 @@ import '@rainbow-me/rainbowkit/styles.css';
 
 const queryClient = new QueryClient();
 
-// Твой актуальный Project ID
 const walletConnectProjectId = '7e09105ca86c457b8fa31db17ab913da';
 
 const config = getDefaultConfig({
@@ -26,15 +24,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
-        <OnchainKitProvider 
-          chain={base} 
-          // Добавили пустой конфиг, чтобы OnchainKit не ругался на отсутствие параметров
-          config={{ appearance: { name: 'Base Checkin' } }} 
-        >
-          <RainbowKitProvider theme={darkTheme()} modalSize="compact">
-            {children}
-          </RainbowKitProvider>
-        </OnchainKitProvider>
+        <RainbowKitProvider theme={darkTheme()} modalSize="compact">
+          {children}
+        </RainbowKitProvider>
       </QueryClientProvider>
     </WagmiProvider>
   );
