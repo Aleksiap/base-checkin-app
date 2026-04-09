@@ -10,19 +10,24 @@ export default function Page() {
       alignItems: 'center', 
       justifyContent: 'center', 
       minHeight: '100vh',
-      backgroundColor: '#000', // Черный фон, чтобы кнопка выделялась
-      color: '#fff'
+      backgroundColor: '#000',
+      color: '#fff',
+      gap: '20px'
     }}>
-      <h1 style={{ marginBottom: '20px', fontFamily: 'sans-serif' }}>Base Check-in</h1>
+      <h1 style={{ fontFamily: 'sans-serif', margin: 0 }}>Base Daily Check-in</h1>
       
-      <div style={{ padding: '20px' }}>
-        {/* Это стандартная кнопка RainbowKit */}
-        <ConnectButton label="Connect Wallet" />
+      <div style={{ 
+        background: '#1a1a1a', 
+        padding: '30px', 
+        borderRadius: '20px', 
+        border: '1px solid #333' 
+      }}>
+        <ConnectButton label="Connect to Base" />
       </div>
 
-      <p style={{ marginTop: '10px', fontSize: '12px', color: '#666' }}>
-        Vercel Build: Ready
-      </p>
+      <div style={{ fontSize: '10px', color: '#444' }}>
+        App ID: 69d6b9690...
+      </div>
     </main>
   );
 }

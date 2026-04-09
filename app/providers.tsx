@@ -28,9 +28,15 @@ export function Providers({ children }: { children: React.ReactNode }) {
       <QueryClientProvider client={queryClient}>
         <OnchainKitProvider 
           chain={base} 
-          // Ключ будет подтягиваться из настроек Vercel автоматически
+          // Ключ берется из Environment Variables в Vercel
           apiKey={process.env.NEXT_PUBLIC_ONCHAINKIT_API_KEY} 
-          config={{ appearance: { name: 'Base Checkin' } }}
+          config={{ 
+            appearance: { 
+              name: 'Base Checkin',
+              mode: 'dark',
+              theme: 'default'
+            } 
+          }}
         >
           <RainbowKitProvider theme={darkTheme()} modalSize="compact">
             {children}
