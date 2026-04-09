@@ -1,15 +1,12 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import { Providers } from "./providers"; // Подключаем твой файл
+import './globals.css';
+import { Providers } from './providers';
 
-const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "Base Check-in App",
-  description: "Check in daily and build your streak",
+export const metadata = {
+  title: 'Base Daily Check-in',
+  description: 'Daily check-in on Base Network',
   other: {
-    'base:app_id': '69d6b07cadb751d63e3ce5e7',
+    // Твой App ID из панели Base Dev
+    'base:app_id': '69d6b9690b55e7382276f4de', 
   },
 };
 
@@ -20,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body>
         <Providers>{children}</Providers>
       </body>
     </html>
