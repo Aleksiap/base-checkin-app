@@ -12,21 +12,29 @@ export default function Page() {
       minHeight: '100vh',
       backgroundColor: '#000',
       color: '#fff',
-      gap: '20px'
+      padding: '20px'
     }}>
-      <h1 style={{ fontFamily: 'sans-serif', margin: 0 }}>Base Daily Check-in</h1>
-      
-      <div style={{ 
-        background: '#1a1a1a', 
-        padding: '30px', 
-        borderRadius: '20px', 
-        border: '1px solid #333' 
+      <div style={{
+        background: '#111',
+        padding: '40px',
+        borderRadius: '24px',
+        border: '1px solid #333',
+        textAlign: 'center',
+        boxShadow: '0 10px 30px rgba(0,0,0,0.5)'
       }}>
-        <ConnectButton label="Connect to Base" />
-      </div>
-
-      <div style={{ fontSize: '10px', color: '#444' }}>
-        App ID: 69d6b9690...
+        <h1 style={{ marginBottom: '24px', fontSize: '24px' }}>Base Check-in</h1>
+        
+        {/* Кнопка с отключенным балансом для быстрой загрузки */}
+        <ConnectButton 
+          label="Connect Wallet"
+          showBalance={false}
+          chainStatus="icon"
+          accountStatus="address"
+        />
+        
+        <p style={{ marginTop: '20px', fontSize: '12px', color: '#555' }}>
+          Status: Network Base Ready
+        </p>
       </div>
     </main>
   );

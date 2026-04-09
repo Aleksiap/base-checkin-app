@@ -2,20 +2,25 @@
 
 import { OnchainKitProvider } from '@coinbase/onchainkit';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { WagmiProvider, http } from 'wagmi';
+import { WagmiProvider, createConfig, http } from 'wagmi';
 import { base } from 'wagmi/chains';
-import { getDefaultConfig, RainbowKitProvider, darkTheme } from '@rainbow-me/rainbowkit';
+import { coinbaseWallet } from 'wagmi/connectors';
+import { RainbowKitProvider, darkTheme } from '@rainbow-me/rainbowkit';
 import '@rainbow-me/rainbowkit/styles.css';
 
 const queryClient = new QueryClient();
 
-// Твой Project ID от WalletConnect
+// Твой Project ID (WalletConnect)
 const walletConnectProjectId = '7e09105ca86c457b8fa31db17ab913da';
 
-const config = getDefaultConfig({
-  appName: 'Base Checkin',
-  projectId: walletConnectProjectId,
+const config = createConfig({
   chains: [base],
+  connectors: [
+    coinbaseWallet({ 
+      appName: 'Base Checkin',
+      preference: 'all' // Важно для работы Smart Wallet в приложении Base
+    }),
+  ],
   ssr: true,
   transports: {
     [base.id]: http(),
@@ -28,15 +33,8 @@ export function Providers({ children }: { children: React.ReactNode }) {
       <QueryClientProvider client={queryClient}>
         <OnchainKitProvider 
           chain={base} 
-          // Ключ берется из Environment Variables в Vercel
           apiKey={process.env.NEXT_PUBLIC_ONCHAINKIT_API_KEY} 
-          config={{ 
-            appearance: { 
-              name: 'Base Checkin',
-              mode: 'dark',
-              theme: 'default'
-            } 
-          }}
+          config={{ appearance: { name: 'Base Checkin', mode: 'dark' } }}
         >
           <RainbowKitProvider theme={darkTheme()} modalSize="compact">
             {children}
