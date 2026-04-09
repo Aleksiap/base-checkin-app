@@ -1,20 +1,28 @@
-import { ConnectButton } from '@rainbow-me/rainbowkit';
+'use client';
 
-// Константы твоего контракта
-const CONTRACT_ADDRESS = '0x4510004076C3026210f8A4C32f99587285613D10';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 export default function Page() {
   return (
-    <main style={{ padding: '20px', textAlign: 'center' }}>
-      <h1>Daily Check-in</h1>
+    <main style={{ 
+      display: 'flex', 
+      flexDirection: 'column', 
+      alignItems: 'center', 
+      justifyContent: 'center', 
+      minHeight: '100vh',
+      backgroundColor: '#000', // Черный фон, чтобы кнопка выделялась
+      color: '#fff'
+    }}>
+      <h1 style={{ marginBottom: '20px', fontFamily: 'sans-serif' }}>Base Check-in</h1>
       
-      {/* Кнопка коннекта */}
-      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
-        <ConnectButton />
+      <div style={{ padding: '20px' }}>
+        {/* Это стандартная кнопка RainbowKit */}
+        <ConnectButton label="Connect Wallet" />
       </div>
 
-      {/* Здесь будет твоя кнопка чекина */}
-      {/* ... остальной код ... */}
+      <p style={{ marginTop: '10px', fontSize: '12px', color: '#666' }}>
+        Vercel Build: Ready
+      </p>
     </main>
   );
 }
