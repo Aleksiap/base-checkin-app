@@ -1,6 +1,8 @@
 'use client';
 
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { BaseConnectButton } from './components/BaseConnectButton';
+import { ResetButton } from './components/ResetButton';  // если есть
 
 export default function Page() {
   return (
