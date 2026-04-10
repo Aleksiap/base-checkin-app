@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useAccount, useWriteContract, useReadContract } from 'wagmi';
-import { SmartConnectButton } from './components/SmartConnectButton';
+import { BaseConnectButton } from './components/BaseConnectButton';
 import { CONTRACT_ADDRESS, CHECKIN_ABI } from './constants';
 
 export default function Home() {
@@ -72,9 +72,9 @@ export default function Home() {
         
         <h1 className="text-2xl font-black mb-6 text-center tracking-tight">Base Check-in</h1>
 
-        {/* Умная кнопка подключения */}
-        <div className="mb-8">
-          <SmartConnectButton />
+        {/* Кнопка подключения Coinbase Wallet */}
+        <div className="mb-8 w-full">
+          <BaseConnectButton />
         </div>
 
         {/* Информация о чекинах */}

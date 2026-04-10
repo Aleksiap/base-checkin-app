@@ -1,16 +1,49 @@
 'use client';
 
-import { useBaseConnection } from '../hooks/useBaseConnection';
+import { useAccount, useConnect, useDisconnect } from 'wagmi';
+import { useState, useEffect } from 'react';
 
 export function BaseConnectButton() {
-  const { 
-    address, 
-    isConnected, 
-    isConnecting, 
-    isBaseApp,
-    connectBaseAccount, 
-    disconnectBase 
-  } = useBaseConnection();
+  const { address, isConnected } = useAccount();
+  const { connect, connectors } = useConnect();
+  const { disconnect } = useDisconnect();
+  const [isConnecting, setIsConnecting] = useState(false);
+  const [isBaseApp, setIsBaseApp] = useState(false);
+
+  useEffect(() => {
+    // Проверяем, открыто ли внутри Base App
+    const ua = navigator.userAgent;
+    setIsBaseApp(ua.includes('Base') || ua.includes('CBase') || ua.includes('com.base'));
+  }, []);
+
+  const connectWallet = async () => {
+    setIsConnecting(true);
+    try {
+      // Для Base App — прямой вызов
+      if (isBaseApp) {
+        // Пробуем открыть Coinbase Wallet
+        window.location.href = 'cbwallet://';
+        setTimeout(() => {
+          // Если не открылся — предлагаем установить
+          window.location.href = 'https://go.cb-w.com/mobile/download';
+        }, 500);
+      } else {
+        // Для обычного браузера — через wagmi
+        const coinbaseConnector = connectors.find(c => c.id === 'coinbaseWallet');
+        if (coinbaseConnector) {
+          await connect({ connector: coinbaseConnector });
+        } else {
+          // Fallback: первый доступный коннектор
+          const anyConnector = connectors[0];
+          if (anyConnector) await connect({ connector: anyConnector });
+        }
+      }
+    } catch (error) {
+      console.error('Connection error:', error);
+    } finally {
+      setIsConnecting(false);
+    }
+  };
 
   if (isConnected && address) {
     return (
@@ -21,8 +54,8 @@ export function BaseConnectButton() {
           </span>
         </div>
         <button
-          onClick={disconnectBase}
-          className="text-red-400 text-sm hover:text-red-300 transition"
+          onClick={() => disconnect()}
+          className="text-red-400 text-sm hover:text-red-300"
         >
           Disconnect
         </button>
@@ -32,11 +65,11 @@ export function BaseConnectButton() {
 
   return (
     <button
-      onClick={connectBaseAccount}
+      onClick={connectWallet}
       disabled={isConnecting}
-      className="bg-white text-black px-6 py-3 rounded-xl font-bold disabled:opacity-50"
+      className="bg-white text-black px-6 py-3 rounded-xl font-bold disabled:opacity-50 w-full"
     >
-      {isConnecting ? 'Connecting...' : (isBaseApp ? 'Connect Base Account' : 'Connect Wallet')}
+      {isConnecting ? 'Connecting...' : 'Connect Coinbase Wallet'}
     </button>
   );
 }
