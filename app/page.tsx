@@ -72,7 +72,7 @@ export default function Home() {
         
         <h1 className="text-2xl font-black mb-6 text-center tracking-tight">Base Check-in</h1>
 
-        {/* Стандартный ConnectButton — как у пользователя */}
+        {/* Стандартный ConnectButton — показывает все кошельки */}
         <div className="mb-8">
           <ConnectButton />
         </div>

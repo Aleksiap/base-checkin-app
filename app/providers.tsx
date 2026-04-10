@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { WagmiProvider, http } from 'wagmi';
 import { base } from 'wagmi/chains';
 import { getDefaultConfig, RainbowKitProvider, darkTheme } from '@rainbow-me/rainbowkit';
+import { coinbaseWallet, metaMaskWallet } from '@rainbow-me/rainbowkit/wallets';
 import '@rainbow-me/rainbowkit/styles.css';
 
 const queryClient = new QueryClient();
@@ -18,6 +19,8 @@ const config = getDefaultConfig({
   transports: {
     [base.id]: http(),
   },
+  // Не указываем wallets — тогда RainbowKit показывает ВСЕ доступные кошельки
+  // Base Account, Coinbase Wallet, MetaMask — все будут в меню
 });
 
 export function Providers({ children }: { children: React.ReactNode }) {
