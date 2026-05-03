@@ -8,10 +8,15 @@ import { base } from "wagmi/chains";
 import { injected, coinbaseWallet } from "wagmi/connectors";
 import "@coinbase/onchainkit/styles.css";
 
-// Клиент для обработки запросов
+// Подтягиваем твои ключи
+const apiKey = process.env.NEXT_PUBLIC_ONCHAIN_KIT_API_KEY ?? "";
+const projectId = process.env.NEXT_PUBLIC_WC_PROJECT_ID ?? "";
+
+// Формируем твою личную ссылку для дашборда Base (CDP)
+const cdpUrl = `https://api.developer.coinbase.com/rpc/v1/base/${apiKey}`;
+
 const queryClient = new QueryClient();
 
-// Конфигурация Wagmi с поддержкой расширений (Phantom, Zerion и др.)
 const wagmiConfig = createConfig({
   chains: [base],
   connectors: [
@@ -19,11 +24,12 @@ const wagmiConfig = createConfig({
       appName: "Base Checkin",
       preference: "all" 
     }),
-    injected(), // Позволяет находить любые установленные расширения
+    injected(), 
   ],
   ssr: true,
   transports: {
-    [base.id]: http(),
+    // ВАЖНО: Именно эта строчка отправляет статистику в твой дашборд разработчика
+    [base.id]: http(apiKey ? cdpUrl : undefined),
   },
 });
 
@@ -40,14 +46,15 @@ export function Providers({ children }: { children: ReactNode }) {
     <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
         <OnchainKitProvider
-          apiKey={process.env.NEXT_PUBLIC_ONCHAIN_KIT_API_KEY ?? ""}
+          apiKey={apiKey}
+          projectId={projectId}
           chain={base}
           config={{
             appearance: {
               mode: "dark",
             },
             wallet: {
-              display: "modal", // Принудительный вызов окна выбора кошелька
+              display: "modal", 
               preference: "all",
             },
           }}
