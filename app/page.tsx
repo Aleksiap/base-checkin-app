@@ -92,7 +92,6 @@ export default function Home() {
           <div className="w-full flex justify-center mb-1">
             <Wallet>
               <ConnectWallet 
-                text="Connect Wallet"
                 className={!isConnected 
                   ? "!bg-[#3b99ff] hover:!bg-[#2a88f0] !text-white !font-bold !py-3 !px-9 !rounded-2xl !text-base !transition-all !w-fit !mx-auto" 
                   : "!w-full !bg-white/5 !text-white !font-bold !py-3.5 !px-5 !rounded-2xl !flex !justify-center !items-center !text-sm"
